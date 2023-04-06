@@ -1,37 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
-    
+  <title>Görsel İşleme</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h2>Puzzle</h2>
-    </header>
-    <main>
-        <div class="container">
-            <div class="image-container"><img id="1" class="thumb" src="sliceses/slice1.jpg" alt=""></div>
-            <div class="image-container"><img id="2" class="thumb" src="sliceses/slice2.jpg" alt=""></div>
-            <div class="image-container"><img id="3" class="thumb" src="sliceses/slice3.jpg" alt=""></div>
-            <div class="image-container"><img id="4" class="thumb" src="sliceses/slice4.jpg" alt=""></div>
-            <div class="image-container"><img id="5" class="thumb" src="sliceses/slice5.jpg" alt=""></div>
-            <div class="image-container"><img id="6" class="thumb" src="sliceses/slice6.jpg" alt=""></div>
-            <div class="image-container"><img id="7"  class="thumb" src="sliceses/slice7.jpg" alt=""></div>
-            <div class="image-container"><img id="8" class="thumb" src="sliceses/slice8.jpg" alt=""></div>
-            <div class="image-container"><img id="9"  class="thumb" src="sliceses/slice9.jpg" alt=""></div>
-            <div class="image-container"><img id="10"  class="thumb" src="sliceses/slice10.jpg" alt=""></div>
-            <div class="image-container"><img id="11"  class="thumb" src="sliceses/slice11.jpg" alt=""></div>
-            <div class="image-container"><img id="12"  class="thumb" src="sliceses/slice12.jpg" alt=""></div>
-            <div class="image-container"><img id="13"  class="thumb" src="sliceses/slice13.jpg" alt=""></div>
-            <div class="image-container"><img id="14"  class="thumb" src="sliceses/slice14.jpg" alt=""></div>
-            <div class="image-container"><img id="15"  class="thumb" src="sliceses/slice15.jpg" alt=""></div>
-            <div class="image-container"><img id="16"  class="thumb" src="sliceses/slice16.jpg" alt=""></div>
-        </div>
-    </main>
-    <script src="new.js"></script>
+	<header>
+		<h1>Puzzle Game</h1>
+	</header>
+	<main>
+		<input type="file" id="imageInput" accept="image/*">
+  		<div id="container"></div>
+  		<button onclick="startGame()">karıştır</button>
+		  <table>
+			  <tr>
+				  <th>İsim</th>
+				  <th>Skor</th>
+				  <th>Adım</th>
+			  </tr>
+			  <tr>
+				  <td>Ali</td>
+				  <td id="score">0</td>
+				  <td id="step">0</td>
+			  </tr>
+		  </table>
+	</main>
+	<aside>
+		
+	</aside>
+  
+  <script src="script.js"></script>
 </body>
 </html>

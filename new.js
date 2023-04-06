@@ -5,6 +5,39 @@ let adım = 0;
 let puan = 0;
 
 
+// Görsel dosyasını yükleme
+var imageInput = document.getElementById("imageInput");
+imageInput.addEventListener("change", function() {
+  var img = new Image();
+  img.src = URL.createObjectURL(imageInput.files[0]);
+  img.onload = function() {
+    // Görselin boyutunu değiştirme
+    var canvas = document.createElement("canvas");
+    var ctx = canvas.getContext("2d");
+    canvas.width = 800;
+    canvas.height = 800;
+    ctx.drawImage(img, 0, 0, 800, 800);
+
+    // Görseli 16 parçaya bölme
+    var tileSize = 200;
+    for (var y = 0; y < 4; y++) {
+      for (var x = 0; x < 4; x++) {
+        var tileCanvas = document.createElement("canvas");
+        tileCanvas.width = tileSize;
+        tileCanvas.height = tileSize;
+        var tileCtx = tileCanvas.getContext("2d");
+        tileCtx.drawImage(canvas, x*tileSize, y*tileSize, tileSize, tileSize, 0, 0, tileSize, tileSize);
+
+        var tileDiv = document.createElement("div");
+        tileDiv.className = "image-container"
+        tileDiv.style.width = tileSize + "px";
+        tileDiv.style.height = tileSize + "px";
+        tileDiv.style.backgroundImage = "url(" + tileCanvas.toDataURL() + ")";
+        document.getElementById("container").appendChild(tileDiv);
+      }
+    }
+  }
+});
 
 function startGame(){
     
