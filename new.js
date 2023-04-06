@@ -1,89 +1,116 @@
-window.addEventListener('load',karıstır);
+
 let twoSlices = [];
 
+let adım = 0;
+let puan = 0;
 
-function karıstır (){
+
+
+function startGame(){
+    
     var imageContainers = document.getElementsByClassName("image-container");
-    var orderValues = {}; // "order" değerlerini saklamak için bir obje oluşturulur
-
-    for (var i = 0; i < imageContainers.length; i++) {
-        var randomOrder;
-        do {
-            randomOrder = Math.floor(Math.random() * 16) + 1; // 1 ile 16 arasında bir rastgele sayı oluşturulur
-        } while (orderValues[randomOrder]); // Eğer rastgele sayı zaten objenin içinde varsa, yeni bir rastgele sayı oluşturulur
-
-        orderValues[randomOrder] = true; // "order" değeri objeye eklenir
-        imageContainers[i].style.order = randomOrder; // Her bir div elementine rastgele bir "order" değeri atar
-        ll.insertAt(imageContainers[i], i);
+    var arr = [];
+       
+    while(arr.length < 16){
+        var randomNum = Math.floor(Math.random() * 16)+1;
+        if(arr.indexOf(randomNum) === -1) arr.push(randomNum);
+        
     }
-    
-    
-    startGame();
+
+    for (var i = 0; i < 16; i++) {
+            
+        imageContainers[i].style.order = arr[i];
+        firstll.insertAtIndex(imageContainers[i],i);
+        if (i === 0) {
+            randomll.insertFirst(imageContainers[arr.indexOf(1)]);
+        }
+        else{
+            randomll.insertLast(imageContainers[arr.indexOf(i+1)]);
+        }
+    }
+    clickImage();
 }
 
-function startGame (){
-    imageClick();
-}
-
-function imageClick (){
+function clickImage (){
     let allImages = document.getElementsByClassName("image-container");
     for ( const slice of allImages) {
-        slice.addEventListener("click", orderDegistir);
+        slice.addEventListener("click", replaceImage);
         
     }
 }
 
-
-
-
-
-function orderDegistir () {
-    this.style.border = "2px solid red";
-    twoSlices.push(this);
-    if (twoSlices.length === 2) {
-        
-        let order1 = window.getComputedStyle(twoSlices[0]).getPropertyValue("order");
-        let order2 = window.getComputedStyle(twoSlices[1]).getPropertyValue("order");
-
-        twoSlices[0].style.order = order2;
-        twoSlices[1].style.order = order1;
-        twoSlices[0].style.border = "none";
-        twoSlices[1].style.border = "none";
-
-        
-        
-        ll.changeDataIndex(ll.findIndex(twoSlices[0]), twoSlices[1]);
-        ll.changeDataIndex(ll.findIndex(twoSlices[1]), twoSlices[0]);
-       
-        twoSlices.length = 0;
-        ll.printListData();
-        console.log("****");
-
-    }
+function replaceImage (){
     
-}
+    if (checkControll(randomll.findIndex(this)) == false ) {
+        this.style.border = "2px solid red";
+        twoSlices.push(this);
+        if (twoSlices.length === 2) {
+            
+            let order1 = parseInt(window.getComputedStyle(twoSlices[0]).getPropertyValue("order"));
+            let order2 = parseInt(window.getComputedStyle(twoSlices[1]).getPropertyValue("order"));
 
-function checkWin () {
-    
-    for (let index = 0; index < ll.length; index++) {
-        let value = ll.findValueByIndex(index);
-        console.log("value: " + value.style.order);
-        console.log("index: " + value.getElementById(index).style.order);
-        if(value.style.order === value.getElementById(index).style.order){
-            console.log("win");
+            twoSlices[0].style.order = order2;
+            twoSlices[1].style.order = order1;
+            twoSlices[0].style.border = "none";
+            twoSlices[1].style.border = "none";
+
+            randomll.swap(randomll.findIndex(twoSlices[0]),randomll.findIndex(twoSlices[1]));
+
+            console.log(checkControll(randomll.findIndex(twoSlices[0])));
+
+            if (checkControll(randomll.findIndex(twoSlices[0]))) {
+                puan=puan + 10;
+                
+            }
+            else{
+                puan=puan-5;
+            }
+            adım++;
+            document.getElementById("score").innerHTML = puan;
+            document.getElementById("step").innerHTML = adım;
+            
+
+            twoSlices = [];
         }
-        
     }
+   
+    
+    
 }
 
+function checkControll (index){
+
+    var dogru = false;
+    for (let i = 0; i < 16; i++) {
+        if(randomll.findValueByIndex(index) === firstll.findValueByIndex(i) && index === i){
+            dogru = true;
+        }
+    }
+    return dogru;
+
+}
+
+function checkwin() {
+    var win = false;
+    for (let i = 0; i < 16; i++) {
+        if(randomll.findValueByIndex(i) === firstll.findValueByIndex(i)){
+            win = true;
+        }
+        else{
+            win = false;
+        }
+    }
+    return win;
+}
 
 
 class Node {
-    constructor(value, next = null) {
+    constructor(value , next = null) {
         this.value = value;
         this.next = next;
     }
 }
+
 
 class LinkedList {
     constructor() {
@@ -91,10 +118,13 @@ class LinkedList {
         this.size = 0;
     }
 
+    
+
     insertFirst(value) {
-        this.head = new Node(value, this.head);
+        this.head = new Node(value, this.head , this.head );
         this.size++;
     }
+
 
     insertLast(value) {
         let node = new Node(value);
@@ -108,10 +138,18 @@ class LinkedList {
             }
             current.next = node;
         }
+        
         this.size++;
     }
 
-    insertAt(value, index) {
+    printListData() {
+        let current = this.head;
+        while (current) {
+            console.log(current.value);
+            current = current.next;
+        }
+    }
+    insertAtIndex(value, index) {
         if (index > 0 && index > this.size) {
             return;
         }
@@ -136,14 +174,13 @@ class LinkedList {
     findIndex(value) {
         let current = this.head;
         let count = 0;
-        while (current) {
+        while (current != null) {
             if (current.value === value) {
                 return count;
             }
             count++;
             current = current.next;
         }
-        
     }
 
     findValueByIndex(index) {
@@ -156,41 +193,51 @@ class LinkedList {
           count++;
           current = current.next;
         }
-        return null;
     }
 
+    swap(index1, index2) {
+        if (index1 < 0 || index1 >= this.size || index2 < 0 || index2 >= this.size) {
+          return;
+        }
     
-
-
-    clearList() {
-        this.head = null;
-        this.size = 0;
-    }
-
-    printListData() {
-        let current = this.head;
-        while (current) {
-            console.log(current.value);
-            current = current.next;
+        if (index1 === index2) {
+          return;
         }
-    }
-
-    changeDataIndex(index, value){
-        
-        let current = this.head;
-        let count = 0;
-        while (current) {
-            if (count == index) {
-                current.value = value;
-            }
-            count++;
-            current = current.next;
+    
+        let node1 = this.head;
+        let node2 = this.head;
+        let prev1 = null;
+        let prev2 = null;
+    
+        for (let i = 0; i < index1; i++) {
+          prev1 = node1;
+          node1 = node1.next;
         }
-        return null;
+    
+        for (let i = 0; i < index2; i++) {
+          prev2 = node2;
+          node2 = node2.next;
+        }
+    
+        if (prev1 !== null) {
+          prev1.next = node2;
+        } else {
+          this.head = node2;
+        }
+    
+        if (prev2 !== null) {
+          prev2.next = node1;
+        } else {
+          this.head = node1;
+        }
+    
+        let temp = node1.next;
+        node1.next = node2.next;
+        node2.next = temp;
     }
-
+    
 
 }
 
-const ll = new LinkedList();
-
+const firstll = new LinkedList();
+const randomll = new LinkedList();
