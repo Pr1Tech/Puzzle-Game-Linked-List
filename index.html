@@ -19,16 +19,26 @@
 				  <th>Adım</th>
 			  </tr>
 			  <tr>
-				  <td>Ali</td>
+				  <td id="name"> 0</td>
 				  <td id="score">0</td>
 				  <td id="step">0</td>
 			  </tr>
 		  </table>
+		  <button onclick="saveScore()">Save</button>
 	</main>
 	<aside>
 		
 	</aside>
   
   <script src="new.js"></script>
+  <script>
+    const params = new URLSearchParams(window.location.search); // URL parametrelerini al
+
+    const name = params.get('name'); // name parametresini al
+
+    // sonuçları göster
+    const resultDiv = document.getElementById('name');
+    resultDiv.innerHTML = `${name}`;
+  </script>
 </body>
 </html>

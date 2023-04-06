@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Login Screen</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body>
+    <div class="login">
+      <h2>Login Form</h2>
+      <form id="login-form" action="#" method="POST">
+        <input type="text" placeholder="Username" name="username" required>
+        <input type="password" placeholder="Password" name="password" required>
+        <input type="submit" value="Create" id="login-btn">
+      </form>
+    </div>
+    
+    <script>
+      const form = document.getElementById("login-form");
+      const loginBtn = document.getElementById("login-btn");
+
+      form.addEventListener("submit", function(event) {
+        event.preventDefault();
+        const userName = form.elements.username.value;
+        const password = form.elements.password.value;
+
+        // Replace the URL with the endpoint where you want to send the data
+        const url = "https://puzzle-game-backend-linkedlist.herokuapp.com/user/create-user";
+        const data = { userName, password };
+
+        fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+
+          window.location.href="login.html"
+           
+        })
+        .catch(error => {
+          console.error(error);
+          // Handle any errors that occur during the fetch request
+        });
+      });
+    </script>
+  </body>
+</html>
+

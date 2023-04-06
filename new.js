@@ -136,6 +136,32 @@ function checkwin() {
     return win;
 }
 
+function saveScore() {
+    const name = document.getElementById("name").textContent;
+    const score = document.getElementById("score").textContent;
+    const step = document.getElementById("step").textContent;
+    
+    // Create an object with the data
+    const data = { createdBy: name, score: score, adım: step };
+    
+    // Send the data to the server using fetch()
+    fetch('https://puzzle-game-backend-linkedlist.herokuapp.com/score/create-score', {
+      method: 'POST',
+      
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => {
+      // Handle the response from the server
+      console.log(response);
+    })
+    .catch(error => {
+      // Handle any errors that occur
+      console.error(error);
+    });
+  }
 
 class Node {
     constructor(value , next = null) {
