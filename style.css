@@ -15,7 +15,7 @@ body {
 }
 header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     margin-bottom: 30px;;
 }
@@ -40,16 +40,16 @@ main {
     flex-wrap: wrap;
 }
 
-.container {
-    width: 600px;
-    height: 600px;
-    display: flex;
-    flex-wrap: wrap;
+#container {
+    width: 800px;
+    height: 800px;
+    display: flex !important;
+    flex-wrap: wrap !important;
 }
 .thumb {
     width: 100%;
     height: 100%;
 }
 .image-container {
-    flex-basis: 25%;
+    flex-basis: 25% ;
 }
