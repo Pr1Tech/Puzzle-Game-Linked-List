@@ -7,11 +7,14 @@ let puan = 0;
 
 // Görsel dosyasını yükleme
 var imageInput = document.getElementById("imageInput");
+var starterGame = document.getElementById("start-game");
 imageInput.addEventListener("change", function() {
   var img = new Image();
   img.src = URL.createObjectURL(imageInput.files[0]);
   img.onload = function() {
     // Görselin boyutunu değiştirme
+    imageInput.style.display = "none";
+    starterGame.style.display = "none";
     var canvas = document.createElement("canvas");
     var ctx = canvas.getContext("2d");
     canvas.width = 800;
@@ -33,14 +36,20 @@ imageInput.addEventListener("change", function() {
         tileDiv.style.width = tileSize + "px";
         tileDiv.style.height = tileSize + "px";
         tileDiv.style.backgroundImage = "url(" + tileCanvas.toDataURL() + ")";
-        document.getElementById("container").appendChild(tileDiv);
+        document.getElementById("main-container").appendChild(tileDiv);
+        document.getElementById("main-container").style.display = "flex";
+        document.getElementById("karistir").style.display = "flex";
+        document.getElementById("main").style.justifyContent = "space-around";
       }
     }
+    alert("Oyunu başlatmak için karıştır butonuna basınız");
   }
 });
 
 function startGame(){
     
+    document.getElementById("karistir").style.display = "none";
+    document.getElementById("score-board").style.display = "flex";
     var imageContainers = document.getElementsByClassName("image-container");
     var arr = [];
        
@@ -70,6 +79,10 @@ function clickImage (){
         slice.addEventListener("click", replaceImage);
         
     }
+}
+
+function newGame() {
+    location.reload();
 }
 
 function replaceImage (){
@@ -106,6 +119,12 @@ function replaceImage (){
             twoSlices = [];
         }
     }
+    if (checkwin()===true) {
+        alert("Tebrikler oyunu kazandınız");
+        document.getElementById("save-score").style.display = "flex";
+        document.getElementById("yeniOyun").style.display = "flex";
+    }
+        
    
     
     
@@ -129,9 +148,11 @@ function checkwin() {
         if(randomll.findValueByIndex(i) === firstll.findValueByIndex(i)){
             win = true;
         }
-        else{
+        else if (randomll.findValueByIndex(i) !== firstll.findValueByIndex(i)) {
             win = false;
+            break;
         }
+            
     }
     return win;
 }

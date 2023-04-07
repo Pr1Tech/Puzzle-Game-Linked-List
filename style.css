@@ -6,45 +6,42 @@ body,html {
     height: 100%;
 }
 body {
-    background: #3d88ce;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 16px;
-    color: #85dee1;
-    line-height: 1.5;
-    margin: 0;
+    background: #3d88ce !important; 
+    font-family: 'Open Sans', sans-serif !important;
+    font-size: 16px !important;
+    color: black !important;
+    line-height: 1.5 !important;
+    margin: 0 !important;
 }
 header {
-    display: flex;
-    justify-content: center;
+    display: flex !important;
+    justify-content: center !important;
     align-items: center;
     margin-bottom: 30px;;
 }
 header h2{
     margin: 0;
 }
-header ul {
-    margin: 0;
-    list-style: none;
-}
-header ul li {
-    display: inline-block;
-    margin-right: 8px;
-    border-right: 1px solid blueviolet;
-    line-height: 1;
-    padding-right: 10px;
-}
+
 main {
     display: flex;
-    justify-content: center;
+    flex-direction: row;
+    
     align-items: center;
     flex-wrap: wrap;
 }
 
-#container {
+.image-file{
+    margin-top: 50px;
+
+}
+
+#main-container {
     width: 800px;
     height: 800px;
     display: flex !important;
     flex-wrap: wrap !important;
+    margin-bottom: 100px;
 }
 .thumb {
     width: 100%;
@@ -53,3 +50,27 @@ main {
 .image-container {
     flex-basis: 25% ;
 }
+
+#karistir {
+    justify-content: center;
+    align-items: center;
+    display: none;
+}
+
+#yeniOyun {
+    justify-content: center;
+    align-items: center;
+    display: none;
+}
+
+#score-board {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 219px;
+    height: 316px;
+    padding-top: 14px;
+    padding-left: 28px;
+    flex-direction: column;
+}
+
